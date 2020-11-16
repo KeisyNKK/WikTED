@@ -8,7 +8,8 @@ Objective
 
 Use data structures as Linked Lists to build a one time open-collaborative online encyclopedia
 
--------------------
+Functionality
+-------------
 
 Yet you can only know what are the functions and their params.
 
