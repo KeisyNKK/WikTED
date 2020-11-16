@@ -48,18 +48,17 @@ void catchfunctions(char argv[])
       
    while(!feof(fp))
    {
-      fscanf(fp, "%s " , function);
+        fscanf(fp, "%s " , function);
 
-      printf("\n\nFunction is |%s|\n", function );
+        printf("\n\nFunction is |%s|\n", function );
 
-      int i = countparams(function);
+        int i = countparams(function);
 
-      for(int j = 0; j<i; j++)
-      {
-         fscanf(fp, "%s ", param);
-         printf("Param is |%s|\n", param );
-      }
-
+        for(int j = 0; j<i; j++)
+        {
+            fscanf(fp, "%s ", param);
+            printf("Param is |%s|\n", param );
+        }
    }
 
    fclose(fp);
