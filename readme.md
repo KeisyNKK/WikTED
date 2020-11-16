@@ -1,7 +1,7 @@
 WikTED
 ======
 
-(c) 2020 @KeisyNKK
+(c) 2020 @KeisyNKK,
 
 Objective
 ---------
