@@ -27,14 +27,17 @@ then compile it (download MinGW if on Windows) with
 ```bash
 gcc *c -o WikTED
 ```
-then run
+
+then run on LINUX
 
 ```bash
-LINUX: $ ./WikTED.out entrada.txt WINDOWS: $  WikTED.out entrada.txt
+./WikTED.out entrada.txt
 ```
 
+On Windows
+
 ```bash
-WINDOWS: $  WikTED.out entrada.txt
+WikTED.out entrada.txt
 ```
 
 
