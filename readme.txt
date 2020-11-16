@@ -1,4 +1,43 @@
-Trabalho
+WikTED
+======
+
+(c) 2020 @KeisyNKK
+
+Objective
+---------
+
+Use data structures as Linked Lists to build a one time open-collaborative online encyclopedia
+
+-------------------
+
+Yet you can only know what are the functions and their params.
 
 
-Yet, all the functions made can read the input file and know the number of params are supposed to be used in each.
+How to run
+-----------
+
+Open the project folder in the terminal and type
+
+```bash
+git clone https://github.com/KeisyNKK/WikTED.git
+```
+
+then compile it (download MinGW if on Windows) with
+
+```bash
+gcc *c -o WikTED
+```
+then run
+
+```bash
+LINUX: $ ./WikTED.out entrada.txt WINDOWS: $  WikTED.out entrada.txt
+```
+
+```bash
+WINDOWS: $  WikTED.out entrada.txt
+```
+
+
+
+
+
