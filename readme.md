@@ -11,6 +11,7 @@ Use data structures as Linked Lists to build a one time open-collaborative onlin
 Functionality
 -------------
 
+
 Yet you can only know what are the functions and their params.
 
 
@@ -23,19 +24,19 @@ Open the project folder in the terminal and type
 git clone https://github.com/KeisyNKK/WikTED.git
 ```
 
-then compile it (download MinGW if on Windows) with
+Compile it (download MinGW if on Windows) with
 
 ```bash
 gcc *c -o WikTED
 ```
 
-then run on LINUX
+Run on LINUX
 
 ```bash
 ./WikTED.out entrada.txt
 ```
 
-On Windows
+Run on Windows
 
 ```bash
 WikTED.out entrada.txt
