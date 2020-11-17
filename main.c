@@ -6,6 +6,17 @@
 
 int main(int argc, char *argv[])
 {
-   catchfunctions(argv[1]);
+   insertPage("Cavadlo","entrada.txt");
+   insertPage("Malu","entrada.txt");
+   insertPage("Regis","entrada.txt");
+   insertPage("Cavalo","entrada.txt");
+   insertPage("sd","entrada.txt");
+   insertPage("Cavawelo","entrada.txt");
+
+   printList();
+   deletePage("Cavalo");
+
+   printf("\n\n");
+   printList();
    return 0;
 }
