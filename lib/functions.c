@@ -88,7 +88,7 @@ void deletePage(char name[])
       printf("Nothing to be delete");
       //todo: create a log (logfile) for this
    }
-
+   //todo: Free the linked lists first
    //searching for the page name
    while(strcmp(currentPage->name, name)!=0) {
 
@@ -111,25 +111,27 @@ int countparams(char string[])
 {
    int i=0;
 
-   if (strcmp(string,  "INSEREPAGINA") == 0) return i = 21;
+   if (strcmp(string,  "INSEREPAGINA") == 0) return i = 2100;
       
-   else if (strcmp(string, "RETIRAPAGINA") == 0) return i = 12;
+   else if (strcmp(string, "RETIRAPAGINA") == 0) return i = 1200;
 
-   else if (strcmp(string, "INSEREEDITOR") == 0) return i = 13;
+   else if (strcmp(string, "INSEREEDITOR") == 0) return i = 1300;
    
-   else if (strcmp(string, "RETIRAEDITOR") == 0) return i = 14;
+   else if (strcmp(string, "RETIRAEDITOR") == 0) return i = 1400;
 
-   else if (strcmp(string, "INSERECONTRIBUICAO") == 0) return i = 35;
+   else if (strcmp(string, "INSERECONTRIBUICAO") == 0) return i = 3500;
       
-   else if (strcmp(string, "RETIRACONTRIBUICAO") == 0) return i = 36;
+   else if (strcmp(string, "RETIRACONTRIBUICAO") == 0) return i = 3600;
       
-   else if (strcmp(string, "INSERELINK") == 0) return i = 27;
+   else if (strcmp(string, "INSERELINK") == 0) return i = 2700;
 
-   else if (strcmp(string, "RETIRALINK") == 0) return i = 28;
+   else if (strcmp(string, "RETIRALINK") == 0) return i = 2800;
 
-   else if (strcmp(string, "CAMINHO") == 0) return i = 29;
+   else if (strcmp(string, "CAMINHO") == 0) return i = 2900;
       
-   else if (strcmp(string, "IMPRIMEPAGINA") == 0) return i = 10;
+   else if (strcmp(string, "IMPRIMEPAGINA") == 0) return i = 1100;
+   
+   else if (strcmp(string, "IMPRIMEWIKED") == 0) return i = 100;
 
    else if (strcmp(string, "FIM") == 0) return i = 0;
 
@@ -138,60 +140,76 @@ int countparams(char string[])
 
 int callfunction(int i, char** params)
 {
-   if (i==0) return 500;
+   if (i==0) return 500;//
 
-   if(i==21)
+   if(i==2100)//INSEREPAGINA
    {
       insertPage(params[0], params[1]);
    }
       
-   if(i == 12)
+   if(i == 1200)//RETIRAPAGINA
    {
+      printf("not implementRETIRAPAGINAed");
       return 0;
    }
 
-   if(i == 13)
+   if(i == 1300)//INSEREEDITOR
    {
+      printf("not implementINSEREEDITORed");
       return 0;
    }
    
-   if(i == 14)
+   if(i == 1400)//RETIRAEDITOR
    {
+      printf("not implementRETIRAEDITORed");
       return 0;
    }
 
-   if(i == 35)
+   if(i == 3500)//INSERECONTRIBUICAO
    {
+      printf("not implementedINSERECONTRIBUICAO");
       return 0;
    }
       
-   if(i == 36)
+   if(i == 3600)//RETIRACONTRIBUICAO
    {
+      printf("not implementedRETIRACONTRIBUICAO");
       return 0;
    }
       
-   if(i == 27)
+   if(i == 2700)//INSERELINK
    {
+      printf("not implemeINSERELINKnted");
       return 0;
    }
 
-   if(i == 28)
+   if(i == 2800)//RETIRALINK
    {
+      printf("not implemeRETIRALINKnted");
       return 0;
    }
 
-   if(i == 29)
+   if(i == 2900)//CAMINHO
    {
+      printf("not implCAMINHOemented");
       return 0;
    }
       
-   if(i == 10)
+   if(i == 1100)//IMPRIMEPAGINA
    {
+      printf("-not implementIMPRIMEPAGINAed");
+      return 0;
+   }
+  
+   if(i == 100)//IMPRIMEWIKED
+   {
+      printf("-not implemenIMPRIMEWIKEDted");
       return 0;
    }
 
-   if(i == 0)
+   if(i == 0)//FIM
    {
+      printf(".FIMnot implemented");
       return 0;
    }
 
@@ -219,7 +237,7 @@ void catchfunctions(char argv[])
       printf("\n\nFunction is |%s|\n", function );
 
       int i = countparams(function);
-      int size = i/10;
+      int size = i/1000;
       char **params = (char **)malloc(sizeof(char *)*(size));
 
       for(int j = 0; j<size; j++)
