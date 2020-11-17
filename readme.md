@@ -12,7 +12,7 @@ Functionality
 -------------
 
 
-Yet you can only know what are the functions and their params.
+Based on the input file the program knows the instructions and their params and also can create and delete pages on the WikED.
 
 
 How to run

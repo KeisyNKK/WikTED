@@ -17,6 +17,7 @@ Link* currentLink = NULL;
 Page* popPage  = NULL;
 Page* currentPage  = NULL;
 
+
 void insertPage(char name[], char file[])
 {
    //creating a new page  
@@ -110,27 +111,89 @@ int countparams(char string[])
 {
    int i=0;
 
-   if (strcmp(string,  "INSEREPAGINA") == 0) return i = 2;
+   if (strcmp(string,  "INSEREPAGINA") == 0) return i = 21;
       
-   else if (strcmp(string, "RETIRAPAGINA") == 0) return i = 1;
+   else if (strcmp(string, "RETIRAPAGINA") == 0) return i = 12;
 
-   else if (strcmp(string, "INSEREEDITOR") == 0) return i = 1;
+   else if (strcmp(string, "INSEREEDITOR") == 0) return i = 13;
    
-   else if (strcmp(string, "RETIRAREDITOR") == 0) return i = 1;
+   else if (strcmp(string, "RETIRAEDITOR") == 0) return i = 14;
 
-   else if (strcmp(string, "INSERECONTRIBUICAO") == 0) return i = 3;
+   else if (strcmp(string, "INSERECONTRIBUICAO") == 0) return i = 35;
       
-   else if (strcmp(string, "RETIRACONTRIBUICAO") == 0) return i = 3;
+   else if (strcmp(string, "RETIRACONTRIBUICAO") == 0) return i = 36;
       
-   else if (strcmp(string, "INSERELINK") == 0) return i = 2;
+   else if (strcmp(string, "INSERELINK") == 0) return i = 27;
 
-   else if (strcmp(string, "RETIRALINK") == 0) return i = 2;
+   else if (strcmp(string, "RETIRALINK") == 0) return i = 28;
 
-   else if (strcmp(string, "CAMINHO") == 0) return i = 2;
+   else if (strcmp(string, "CAMINHO") == 0) return i = 29;
       
-   else if (strcmp(string, "IMPRIMEPAGINA") == 0) return i = 1;
+   else if (strcmp(string, "IMPRIMEPAGINA") == 0) return i = 10;
 
    else if (strcmp(string, "FIM") == 0) return i = 0;
+
+   return i;
+}
+
+int callfunction(int i, char** params)
+{
+   if (i==0) return 500;
+
+   if(i==21)
+   {
+      insertPage(params[0], params[1]);
+   }
+      
+   if(i == 12)
+   {
+      return 0;
+   }
+
+   if(i == 13)
+   {
+      return 0;
+   }
+   
+   if(i == 14)
+   {
+      return 0;
+   }
+
+   if(i == 35)
+   {
+      return 0;
+   }
+      
+   if(i == 36)
+   {
+      return 0;
+   }
+      
+   if(i == 27)
+   {
+      return 0;
+   }
+
+   if(i == 28)
+   {
+      return 0;
+   }
+
+   if(i == 29)
+   {
+      return 0;
+   }
+      
+   if(i == 10)
+   {
+      return 0;
+   }
+
+   if(i == 0)
+   {
+      return 0;
+   }
 
    return i;
 }
@@ -146,22 +209,31 @@ void catchfunctions(char argv[])
       perror("Error while opening the file.\n");
       exit(EXIT_FAILURE);
    }
-
+   //opening the file
    char function[100], param[100], file[100];
       
    while(!feof(fp))
    {
-        fscanf(fp, "%s " , function);
+      fscanf(fp, "%s " , function);
 
-        printf("\n\nFunction is |%s|\n", function );
+      printf("\n\nFunction is |%s|\n", function );
 
-        int i = countparams(function);
+      int i = countparams(function);
+      int size = i/10;
+      char **params = (char **)malloc(sizeof(char *)*(size));
 
-        for(int j = 0; j<i; j++)
-        {
-            fscanf(fp, "%s ", param);
-            printf("Param is |%s|\n", param );
-        }
+      for(int j = 0; j<size; j++)
+      {
+         fscanf(fp, "%s ", param);
+
+         params[j] = (char *)malloc(sizeof(char)*(strlen(param)+1));
+
+         strcpy(params[j],param);
+
+         printf("Param is |%s|\n", params[j] );
+      }
+
+      callfunction(i,params);
    }
 
    fclose(fp);
