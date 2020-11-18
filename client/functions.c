@@ -5,7 +5,28 @@
 #include<assert.h>
 #include<assert.h>
 #include "./functions.h"
-#include "../lib/page.h"
+#include "../lib/list.h"
+
+//namePage: 0 and fileName: 1
+//poits to
+//contributions (node)
+//links
+
+//Link list
+//namePage
+
+//contributions list
+//fileName 0
+//points to
+//Editor (node)
+
+
+//Editor List
+//name 0
+//contribution node
+
+List* popPage = NULL;
+
 
 int countparams(char string[])
 {
@@ -44,7 +65,13 @@ int callfunction(int i, char** params)
 
    if(i==2100)//INSEREPAGINA
    {
-      insertPage(params[0], params[1]);
+      printf("oi");
+      int size = i/1000;
+      popPage = insertList(params, size, popPage);
+      printf("\n\nnt param %d: %s ",1, (popPage->name)[0]);
+
+      printList(popPage,size);
+      return 1;
    }
       
    if(i == 1200)//RETIRAPAGINA
@@ -61,55 +88,55 @@ int callfunction(int i, char** params)
    
    if(i == 1400)//RETIRAEDITOR
    {
-      printf("not implementRETIRAEDITORed");
+      printf("RETIRAEDITOR not implemented");
       return 0;
    }
 
    if(i == 3500)//INSERECONTRIBUICAO
    {
-      printf("not implementedINSERECONTRIBUICAO");
+      printf("INSERECONTRIBUICAO not implemented");
       return 0;
    }
       
    if(i == 3600)//RETIRACONTRIBUICAO
    {
-      printf("not implementedRETIRACONTRIBUICAO");
+      printf("RETIRACONTRIBUICAO not implemented");
       return 0;
    }
       
    if(i == 2700)//INSERELINK
    {
-      printf("not implemeINSERELINKnted");
+      printf("INSERELINK not implemented");
       return 0;
    }
 
    if(i == 2800)//RETIRALINK
    {
-      printf("not implemeRETIRALINKnted");
+      printf("RETIRALINK not implemented");
       return 0;
    }
 
    if(i == 2900)//CAMINHO
    {
-      printf("not implCAMINHOemented");
+      printf("CAMINHO not implemented");
       return 0;
    }
       
    if(i == 1100)//IMPRIMEPAGINA
    {
-      printf("-not implementIMPRIMEPAGINAed");
+      printf("IMPRIMEPAGINA not implemented");
       return 0;
    }
   
    if(i == 100)//IMPRIMEWIKED
    {
-      printf("-not implemenIMPRIMEWIKEDted");
+      printf("IMPRIMEWIKED not implemented");
       return 0;
    }
 
    if(i == 0)//FIM
    {
-      printf(".FIMnot implemented");
+      printf("FIM not implemented");
       return 0;
    }
 
@@ -148,9 +175,7 @@ void catchfunctions(char argv[])
 
          strcpy(params[j],param);
 
-         printf("Param is |%s|\n", params[j] );
       }
-
       callfunction(i,params);
    }
 
