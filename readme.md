@@ -27,7 +27,7 @@ git clone https://github.com/KeisyNKK/WikTED.git
 Compile it (download MinGW if on Windows) with
 
 ```bash
-gcc ./*.c  ./lib/*.c -o WikTED
+gcc ./*c ./lib/*.c ./client/*.c -o WikTED
 ```
 
 Run on LINUX
