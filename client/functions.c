@@ -6,6 +6,7 @@
 #include<assert.h>
 #include "./functions.h"
 #include "../lib/list.h"
+#include "../lib/page.h"
 
 //namePage: 0 and fileName: 1
 //poits to
@@ -25,8 +26,10 @@
 //name 0
 //contribution node
 
-List* popPage = NULL;
-
+Page* popPage = NULL;
+List* popEditor = NULL; 
+List* popEdit = NULL; 
+List* popLink = NULL; 
 
 int countparams(char string[])
 {
@@ -59,48 +62,71 @@ int countparams(char string[])
    return i;
 }
 
+List* insertEdit(char** params,Page* popPage, int size)
+{
+   printf("Inserting edit %s %s %s...",params[0],params[1],params[2]);
+
+   Page* where = findPageByName(popPage, params[0]);
+   
+   printf("\nfound: %s %s", where->name[0],where->name[1]);
+
+   return popEditor->reference = where->edit = insertList(params, size, where->edit);
+    
+}
+
+
+
 int callfunction(int i, char** params)
 {
    if (i==0) return 500;//
 
    if(i==2100)//INSEREPAGINA
    {
-      printf("oi");
       int size = i/1000;
-      popPage = insertList(params, size, popPage);
-      printf("\n\nnt param %d: %s ",1, (popPage->name)[0]);
-
-      printList(popPage,size);
+      popPage = insertPage(params, size, popPage);
+      printPage(popPage,size);
       return 1;
    }
       
+
    if(i == 1200)//RETIRAPAGINA
-   {
-      printf("not implementRETIRAPAGINAed");
+   {  
+      int size = i/1000;
+
+      popPage = deletePage(params[0], popPage);
+      printPage(popPage,2);
       return 0;
    }
 
    if(i == 1300)//INSEREEDITOR
    {
-      printf("not implementINSEREEDITORed");
+      int size = i/1000;
+
+      popEditor = insertList(params, size,popEditor);
+      printList(popEditor, size);
       return 0;
    }
    
    if(i == 1400)//RETIRAEDITOR
    {
-      printf("RETIRAEDITOR not implemented");
+      int size = i/1000;
+      popEditor = deleteList(params[0],popEditor);
+      printList(popEditor, size);
       return 0;
    }
 
    if(i == 3500)//INSERECONTRIBUICAO
    {
-      printf("INSERECONTRIBUICAO not implemented");
+      int size = i/1000;
+      popEdit = insertEdit(params, popPage, size);
+      printList(popEdit, size);
       return 0;
    }
       
    if(i == 3600)//RETIRACONTRIBUICAO
    {
-      printf("RETIRACONTRIBUICAO not implemented");
+      printf(" not implemented");
+      
       return 0;
    }
       
