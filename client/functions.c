@@ -3,10 +3,8 @@
 #include<math.h>
 #include<string.h>
 #include<assert.h>
-#include<assert.h>
 #include "./functions.h"
-#include "../lib/list.h"
-#include "../lib/page.h"
+#include "../lib/private.h"
 
 //namePage: 0 and fileName: 1
 //poits to
@@ -62,20 +60,6 @@ int countparams(char string[])
    return i;
 }
 
-List* insertEdit(char** params,Page* popPage, int size)
-{
-   printf("Inserting edit %s %s %s...",params[0],params[1],params[2]);
-
-   Page* where = findPageByName(popPage, params[0]);
-   
-   printf("\nfound: %s %s", where->name[0],where->name[1]);
-
-   return popEditor->reference = where->edit = insertList(params, size, where->edit);
-    
-}
-
-
-
 int callfunction(int i, char** params)
 {
    if (i==0) return 500;//
@@ -84,7 +68,7 @@ int callfunction(int i, char** params)
    {
       int size = i/1000;
       popPage = insertPage(params, size, popPage);
-      printPage(popPage,size);
+      printPage(popPage);
       return 1;
    }
       
@@ -94,7 +78,7 @@ int callfunction(int i, char** params)
       int size = i/1000;
 
       popPage = deletePage(params[0], popPage);
-      printPage(popPage,2);
+      printPage(popPage);
       return 0;
    }
 
@@ -117,16 +101,16 @@ int callfunction(int i, char** params)
 
    if(i == 3500)//INSERECONTRIBUICAO
    {
-      int size = i/1000;
-      popEdit = insertEdit(params, popPage, size);
-      printList(popEdit, size);
+      int size = 1;
+      popEdit = insertEdit(params, popPage, size, popEditor, popEdit);
+      printPage(popPage);
       return 0;
    }
       
    if(i == 3600)//RETIRACONTRIBUICAO
    {
-      printf(" not implemented");
-      
+      deleteEdit(params, popEditor, popPage);
+      printPage(popPage);
       return 0;
    }
       

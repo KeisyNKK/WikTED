@@ -29,23 +29,6 @@ Page* insertPage(char** params, int size, Page* popPage)
 }
 
 
-void printPage(Page* popPage, int size) 
-{
-   printf("\n\nTrying to print...\n");
-
-   struct Page *ptr = popPage;
-	
-   //start from the beginning
-    while(ptr != NULL) 
-    {   
-       printf("\n");
-        for(int j = 0; j<size; j++)
-        {
-            printf("[%d] : %s ",j, (ptr->name)[j]);
-        }
-        ptr = ptr->next;
-    }
-}
 
 Page* deletePage(char name[], Page* popPage)
 {
@@ -90,9 +73,7 @@ Page* findPageByName(Page* popPage, char name[])
    struct Page* previous = NULL;
    
    if(popPage == NULL) {
-      printf("Nothing to be delete");
-      return popPage;//if none was inserted yet, there's nothing to be deleted
-
+      return NULL;//if none was inserted yet, there's nothing to be deleted
       //todo: create a log (logfile) for this
    }
    //todo: Free the linked lists first
@@ -102,7 +83,7 @@ Page* findPageByName(Page* popPage, char name[])
       if(currentPage->next == NULL) {
          printf("Name not found");
          //todo: create a log (logfile) for this
-         return popPage;//if null was found, that's the end of the page
+         return NULL;//if null was found, that's the end of the page
       } else {//if there're some items
          previous = currentPage;//keep the previous 
          currentPage = currentPage->next;//and look for the name in the next one

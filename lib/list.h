@@ -14,8 +14,11 @@ struct List
 };
 
 List* insertList(char** params, int size, List* popList);
+
 void printList(List* popList, int size);
 List* deleteList(char name[], List* popList);
+List* findListByName(List* popList, char name[]);
+
 
 #endif // LIST_H_INCLUDED
 

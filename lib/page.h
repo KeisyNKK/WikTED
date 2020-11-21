@@ -15,7 +15,6 @@ struct Page
 };
 
 Page* insertPage(char** params, int size, Page* popPage);
-void printPage(Page* popPage, int size);
 Page* deletePage(char name[], Page* popPage);
 Page* findPageByName(Page* popPage, char name[]);
 
