@@ -6,8 +6,10 @@
 #include "list.h"
 #include "page.h"
 
-List* insertEdit(char** params, Page* popPage, int size, List* popEditor, List* popEdit);
+List* insertEdit(char** params, Page* popPage, List* popEditor, List* popEdit);
 void printPage(Page* popEditor);
 List* deleteEdit(char ** params, List* popEditor, Page* popPage);
+void insertLink(char** params, Page* popPage);
+void isLink(char** params,Page* popPage);
 
 #endif // PRIVATE_H_INCLUDED

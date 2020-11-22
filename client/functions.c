@@ -94,15 +94,14 @@ int callfunction(int i, char** params)
    if(i == 1400)//RETIRAEDITOR
    {
       int size = i/1000;
-      popEditor = deleteList(params[0],popEditor);
+      popEditor = deleteList(params[0],popEditor, 1);
       printList(popEditor, size);
       return 0;
    }
 
    if(i == 3500)//INSERECONTRIBUICAO
    {
-      int size = 1;
-      popEdit = insertEdit(params, popPage, size, popEditor, popEdit);
+      popEdit = insertEdit(params, popPage, popEditor, popEdit);
       printPage(popPage);
       return 0;
    }
@@ -116,7 +115,8 @@ int callfunction(int i, char** params)
       
    if(i == 2700)//INSERELINK
    {
-      printf("INSERELINK not implemented");
+      insertLink(params, popPage);
+      printPage(popPage);
       return 0;
    }
 
@@ -128,7 +128,7 @@ int callfunction(int i, char** params)
 
    if(i == 2900)//CAMINHO
    {
-      printf("CAMINHO not implemented");
+      isLink(params,popPage);
       return 0;
    }
       

@@ -16,7 +16,7 @@ struct List
 List* insertList(char** params, int size, List* popList);
 
 void printList(List* popList, int size);
-List* deleteList(char name[], List* popList);
+List* deleteList(char name[], List* popList, int size);
 List* findListByName(List* popList, char name[]);
 
 
