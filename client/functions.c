@@ -6,23 +6,6 @@
 #include "./functions.h"
 #include "../lib/private.h"
 
-//namePage: 0 and fileName: 1
-//poits to
-//contributions (node)
-//links
-
-//Link list
-//namePage
-
-//contributions list
-//fileName 0
-//points to
-//Editor (node)
-
-
-//Editor List
-//name 0
-//contribution node
 
 Page* popPage = NULL;
 List* popEditor = NULL; 
@@ -68,7 +51,6 @@ int callfunction(int i, char** params)
    {
       int size = i/1000;
       popPage = insertPage(params, size, popPage);
-      printPage(popPage);
       return 1;
    }
       
@@ -76,9 +58,7 @@ int callfunction(int i, char** params)
    if(i == 1200)//RETIRAPAGINA
    {  
       int size = i/1000;
-
       popPage = deletePage(params[0], popPage);
-      printPage(popPage);
       return 0;
    }
 
@@ -87,7 +67,6 @@ int callfunction(int i, char** params)
       int size = i/1000;
 
       popEditor = insertList(params, size,popEditor);
-      printList(popEditor, size);
       return 0;
    }
    
@@ -95,28 +74,24 @@ int callfunction(int i, char** params)
    {
       int size = i/1000;
       popEditor = deleteList(params[0],popEditor, 1);
-      printList(popEditor, size);
       return 0;
    }
 
    if(i == 3500)//INSERECONTRIBUICAO
    {
-      popEdit = insertEdit(params, popPage, popEditor, popEdit);
-      printPage(popPage);
+      insertEdit(params, popPage, popEditor);
       return 0;
    }
       
    if(i == 3600)//RETIRACONTRIBUICAO
    {
       deleteEdit(params, popEditor, popPage);
-      printPage(popPage);
       return 0;
    }
       
    if(i == 2700)//INSERELINK
    {
       insertLink(params, popPage);
-      printPage(popPage);
       return 0;
    }
 
@@ -134,7 +109,6 @@ int callfunction(int i, char** params)
       
    if(i == 1100)//IMPRIMEPAGINA
    {
-      printf("IMPRIMEPAGINA not implemented");
       return 0;
    }
   

@@ -3,8 +3,9 @@
 #include<math.h>
 #include<string.h>
 #include<assert.h>
-#include "../lib/list.h"
-#include "../lib/page.h"
+#include "list.h"
+#include "page.h"
+#include "private.h"
 
 
 void insertEdit(char** params, Page* popPage, List* popEditor)
@@ -203,14 +204,44 @@ void isLink(char** params,Page* popPage)
     if(link == NULL)
     {
         printf("\nLink not found\n");
+        printf("\nThere's no link between them look: %s %s.\n", page1->name[0], page2->name[0]);
+        char str[80];
+        strcpy(str, "\nNAO HA CAMINHO DA PAGINA ");
+        strcat(str, params[0]);
+        strcat(str, " PARA ");
+        strcat(str, params[1]);
+        logg(str);
+        return;
     }
     else if(strcmp(link->link->name[0], params[1]) == 0)
     {
-        printf("\nThere's link between %s %s. see link: %s\n", page1->name[0], page2->name[0], link->link->name[0]);
+        char str[80];
+        strcpy(str, "\nHA CAMINHO DA PAGINA ");
+        strcat(str, page1->name[0]);
+        strcat(str, " PARA ");
+        strcat(str, link->link->name[0]);
+        logg(str);
+        
         return;
     }
-    else
+    
+}
+
+void logg(char* logM)
+{
+    
+    FILE * log;
+
+    log = fopen("log.txt", "a");
+
+    if(log == NULL)
     {
-        printf("\nThere's no link between them look: %s %s.\n", page1->name[0], page2->name[0]);
+        printf("Unable to create file.\n");
+        exit(EXIT_FAILURE);
     }
+
+    fputs(logM, log);
+
+    fclose(log);
+
 }
