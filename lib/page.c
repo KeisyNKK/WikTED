@@ -4,6 +4,7 @@
 #include<string.h>
 #include<assert.h>
 #include "page.h"
+#include "private.h"
 
 Page* insertPage(char** params, int size, Page* popPage)
 {
@@ -42,18 +43,22 @@ Page* deletePage(char name[], Page* popPage)
    //delete the edits as well
 
    if(popPage == NULL) {
-      printf("Nothing to be delete");
+      char str[80];
+      strcpy(str, "\nERRO: NAO HA PAGINAS PARA DELETAR. ");
+      logg(str);
       return popPage;//if none was inserted yet, there's nothing to be deleted
 
       //todo: create a log (logfile) for this
    }
-   //todo: Free the linked lists first
+   //todo: Free the linked Pages first
    //searching for the page name
    while(strcmp(currentPage->name[0], name)!=0) {
       
       if(currentPage->next == NULL) {
-         printf("Name not found");
-         //todo: create a log (logfile) for this
+         char str[80];
+         strcpy(str, "\nERRO: não existe a pagina ");
+         strcat(str, name);
+         logg(str);
 
          return popPage;//if null was found, that's the end of the page
       } else {//if there're some items
@@ -104,7 +109,7 @@ Page* findLinkByName(Page* pageLink, char name[])
       //todo: create a log (logfile) for this
    }
    struct Page* currentLink = pageLink; //taking the last inserted
-   //todo: Free the linked lists first
+   //todo: Free the linked Pages first
    //searching for the page name
    while(strcmp(currentLink->link->name[0], name) != 0) {
 
@@ -119,4 +124,20 @@ Page* findLinkByName(Page* pageLink, char name[])
       }  
    }
    return currentLink;
+}
+
+void reversePage(Page** PageR) 
+{
+   Page* prev   = NULL;
+   Page* current = *PageR;
+   Page* next;
+	
+   while (current != NULL) {
+      next  = current->next;
+      current->next = prev;   
+      prev = current;
+      current = next;
+   }
+	
+   *PageR = prev;
 }

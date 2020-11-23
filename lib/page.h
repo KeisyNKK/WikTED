@@ -19,6 +19,8 @@ Page* deletePage(char name[], Page* popPage);
 Page* findPageByName(Page* popPage, char name[]);
 Page* findLinkByName(Page* pageLink, char name[]);
 void printLink(Page* linkPage);
+void reversePage(Page** PageR);
+
 
 #endif // PAGE_H_INCLUDED
 

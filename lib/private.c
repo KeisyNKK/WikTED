@@ -205,22 +205,22 @@ void isLink(char** params,Page* popPage)
     {
         printf("\nLink not found\n");
         printf("\nThere's no link between them look: %s %s.\n", page1->name[0], page2->name[0]);
-        char str[80];
-        strcpy(str, "\nNAO HA CAMINHO DA PAGINA ");
-        strcat(str, params[0]);
-        strcat(str, " PARA ");
-        strcat(str, params[1]);
-        logg(str);
+        char loggM[50];
+        strcpy(loggM, "\nNAO HA CAMINHO DA PAGINA ");
+        strcat(loggM, params[0]);
+        strcat(loggM, " PARA ");
+        strcat(loggM, params[1]);
+        logg(loggM);
         return;
     }
     else if(strcmp(link->link->name[0], params[1]) == 0)
     {
-        char str[80];
-        strcpy(str, "\nHA CAMINHO DA PAGINA ");
-        strcat(str, page1->name[0]);
-        strcat(str, " PARA ");
-        strcat(str, link->link->name[0]);
-        logg(str);
+        char loggM[80];
+        strcpy(loggM, "\nHA CAMINHO DA PAGINA ");
+        strcat(loggM, page1->name[0]);
+        strcat(loggM, " PARA ");
+        strcat(loggM, link->link->name[0]);
+        logg(loggM);
         
         return;
     }
@@ -243,5 +243,78 @@ void logg(char* logM)
     fputs(logM, log);
 
     fclose(log);
+
+}
+void fprintPage(char ** params, Page* popPage)
+{/*
+    Fisica
+
+    --> Historico de contribuicoes
+    Pedro c1.txt
+    Maria c2.txt
+    Pedro c3.txt
+
+    --> Links
+    Artes artes.txt
+
+    --> Textos
+
+    -------- c1.txt (Pedro) --------
+*/
+    FILE * file;
+
+    Page* page = findPageByName(popPage, params[0]);
+    file = fopen(page->name[1], "a");
+    
+    if(file == NULL)
+    {
+        printf("Unable to create file.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(file,"\n%s\n",page->name[0]);
+    fprintf(file,"\n--> Historico de contribuicoes\n");
+
+    reverseList(&page->edit);
+    List* edit = page->edit;
+    while(edit != NULL)
+    {
+        fprintf(file,"%s %s\n",edit->reference->name[0], edit->name[0]);
+        edit = edit->next;
+    }
+
+    fprintf(file,"\n--> Links\n");
+   
+    reversePage(&page->link);
+    Page* link = page->link;
+    while (link != NULL)
+    {
+        fprintf(file,"%s %s\n",link->link->name[0], link->link->name[0]);
+        link = link->next;
+    }
+    
+    fprintf(file,"\n--> Textos\n");
+
+    edit = page->edit;
+    while (edit != NULL)
+    {
+        printf("editing %s %s", edit->name[0],edit->reference->name[0]);
+        fprintf(file,"\n-------- %s (%s) --------\n", edit->name[0],edit->reference->name[0]);
+        FILE *piece;
+    
+        piece = fopen(edit->name[0], "r");
+        if (piece == NULL){
+            printf("Could not open file %s",edit->name[0]);
+        }
+        char letter;
+        fputc('\n', file);
+        while( ( letter = fgetc(piece) ) != EOF ) fputc(letter, file);
+        fputc('\n', file);
+        edit = edit->next;
+
+    }
+    
+
+    fclose(file);
 
 }

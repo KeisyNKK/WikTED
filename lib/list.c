@@ -66,7 +66,7 @@ List* deleteList(char name[], List* popList, int size)
    }
    printf("\ni %s\n", currentList->name[0]);
    //todo: Free the linked lists first
-   //searching for the page name
+   //searching for the List name
    while(strcmp(currentList->name[0], name)!=0) {
 
       printf("s %s\n",currentList->name[0]);
@@ -74,7 +74,7 @@ List* deleteList(char name[], List* popList, int size)
          printf("Name not found");
          //todo: create a log (logfile) for this
 
-         return popList;//if null was found, that's the end of the page
+         return popList;//if null was found, that's the end of the List
       } else {//if there're some items
          printf("\ni %s\n", currentList->name[0]);
 
@@ -113,7 +113,7 @@ List* findListByName(List* popList, char name[])
       if(currentList->next == NULL) {
          printf("\nName not found \n");
          //todo: create a log (logfile) for this
-         return NULL;//if null was found, that's the end of the page
+         return NULL;//if null was found, that's the end of the List
       } else {//if there're some items
          printf("\nelse %s\n", currentList->name[0]);
 
@@ -123,4 +123,20 @@ List* findListByName(List* popList, char name[])
    printf("\nfound list %s\n",currentList->name[0]);
    return currentList;
 
+}
+
+void reverseList(List** ListR) 
+{
+   List* prev   = NULL;
+   List* current = *ListR;
+   List* next;
+	
+   while (current != NULL) {
+      next  = current->next;
+      current->next = prev;   
+      prev = current;
+      current = next;
+   }
+	
+   *ListR = prev;
 }

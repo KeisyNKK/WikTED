@@ -109,6 +109,7 @@ int callfunction(int i, char** params)
       
    if(i == 1100)//IMPRIMEPAGINA
    {
+      fprintPage(params, popPage);
       return 0;
    }
   
