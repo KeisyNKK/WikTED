@@ -14,7 +14,10 @@ List* popLink = NULL;
 
 int countparams(char string[])
 {
-   int i=0;
+   int i=1;
+   //here's the code to determine what function call
+   //and how many params are there:
+   //always i/1000 is the number of params
 
    if (strcmp(string,  "INSEREPAGINA") == 0) return i = 2100;
       
@@ -45,8 +48,7 @@ int countparams(char string[])
 
 int callfunction(int i, char** params)
 {
-   if (i==0) return 500;//
-
+   //calling the functions with the ammount of params useful
    if(i==2100)//INSEREPAGINA
    {
       int size = i/1000;
@@ -59,7 +61,7 @@ int callfunction(int i, char** params)
    {  
       int size = i/1000;
       popPage = deletePage(params[0], popPage);
-      return 0;
+      return 1;
    }
 
    if(i == 1300)//INSEREEDITOR
@@ -67,61 +69,59 @@ int callfunction(int i, char** params)
       int size = i/1000;
 
       popEditor = insertList(params, size,popEditor);
-      return 0;
+      return 1;
    }
    
    if(i == 1400)//RETIRAEDITOR
    {
       int size = i/1000;
-      popEditor = deleteList(params[0],popEditor, 1);
-      return 0;
+      return 1;
    }
 
    if(i == 3500)//INSERECONTRIBUICAO
    {
       insertEdit(params, popPage, popEditor);
-      return 0;
+      return 1;
    }
       
    if(i == 3600)//RETIRACONTRIBUICAO
    {
       deleteEdit(params, popEditor, popPage);
-      return 0;
+      return 1;
    }
       
    if(i == 2700)//INSERELINK
    {
       insertLink(params, popPage);
-      return 0;
+      return 1;
    }
 
    if(i == 2800)//RETIRALINK
    {
-      printf("RETIRALINK not implemented");
-      return 0;
+      deleteLink( params,popPage);
+      return 1;
    }
 
    if(i == 2900)//CAMINHO
    {
       isLink(params,popPage);
-      return 0;
+      return 1;
    }
       
    if(i == 1100)//IMPRIMEPAGINA
    {
       fprintPage(params, popPage);
-      return 0;
+      return 1;
    }
   
    if(i == 100)//IMPRIMEWIKED
    {
-      printf("IMPRIMEWIKED not implemented");
-      return 0;
+      printWik(popPage);
+      return 1;
    }
 
    if(i == 0)//FIM
    {
-      printf("FIM not implemented");
       return 0;
    }
 
@@ -130,11 +130,12 @@ int callfunction(int i, char** params)
 
 void catchfunctions(char argv[])
 {
-   FILE *fp;
+   //openining the giver agrv file 
+   FILE *entrada;
 
-   fp = fopen(argv,"r");
+   entrada = fopen(argv,"r");
 
-   if (fp == NULL)
+   if (entrada == NULL)
    {
       perror("Error while opening the file.\n");
       exit(EXIT_FAILURE);
@@ -142,27 +143,32 @@ void catchfunctions(char argv[])
    //opening the file
    char function[100], param[100], file[100];
       
-   while(!feof(fp))
+   while(!feof(entrada))
    {
-      fscanf(fp, "%s " , function);
+      //runing line by line
+      fscanf(entrada, "%s " , function);
 
       printf("\n\nFunction is |%s|\n", function );
 
+      //defining the params number
       int i = countparams(function);
       int size = i/1000;
-      char **params = (char **)malloc(sizeof(char *)*(size));
+      char **params = (char **)malloc(sizeof(char *)*(size));//allocating the quantity of params
 
       for(int j = 0; j<size; j++)
       {
-         fscanf(fp, "%s ", param);
+         fscanf(entrada, "%s ", param);
 
-         params[j] = (char *)malloc(sizeof(char)*(strlen(param)+1));
+         params[j] = (char *)malloc(sizeof(char)*(strlen(param)+1));//alocating the params 
 
          strcpy(params[j],param);
 
       }
-      callfunction(i,params);
+      if(callfunction(i,params)==0) return;//either calling the funciton or terminating the code.
+      for(int j = 0; j<size; j++) free(params[j]);//freeing the memory
+      free(params);
+      
    }
 
-   fclose(fp);
+   fclose(entrada);
 }

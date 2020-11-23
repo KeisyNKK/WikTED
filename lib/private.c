@@ -10,44 +10,45 @@
 
 void insertEdit(char** params, Page* popPage, List* popEditor)
 {
-    printf("\n 1) Inserting edit:\n %s %s %s...\n",params[0],params[1],params[2]);
-
+    
     Page* page = findPageByName(popPage, params[0]);
     
     if(page == NULL) 
     {
-        printf("\nPage %s doesn't exist\n", params[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[INSERIRCONTRIBUICAO]: Não existe a página ");
+        strcat(loggM, params[0]);
+        logg(loggM);
         return ;
     }
-    
-    printf("\nFound page: %s %s\n", page->name[0],page->name[1]);
 
-    printf("\nLook for editor\n");
     List* editor = findListByName(popEditor,params[1]);
 
     if(NULL == editor)
     {
-        printf("\nEditor not found ! Can't insert \n");
+        char loggM[100];
+        strcpy(loggM, "\nERRO[INSERIRCONTRIBUICAO]:Não é possíve inserir contribuição, pois não existe contribuidor ");
+        strcat(loggM, editor->name[0]);
+        logg(loggM);
         return;
     }
-    printf("\nFound editor: %s \n", editor->name[0]);
-
-    printf("\nLook for edit\n");
 
     List* edit = findListByName(page->edit, params[2]);
     if(edit != NULL)
     {
-        printf("\nThe edit %s already exists \n",edit->name[0] );
+        char loggM[100];
+        strcpy(loggM, "\nERRO[INSERIRCONTRIBUICAO]:Cada contribuição deve ser unica, não permitido inserir novamente ");
+        strcat(loggM, edit->name[0]);
+        logg(loggM);
         return;
     }
-    printf("\nEdit not found, proceding the insertion..\n");
+
     char** file =(char **)malloc(sizeof(char *));
 
     file[0] = (char *)malloc( sizeof(char) * (strlen(params[2])+1));
 
     strcpy(file[0],params[2]);
 
-    printf("\nEditor: %s  \n", editor->name[0]);
     page->edit = insertList(file, 1, page->edit);
 
     page->edit->reference = editor;
@@ -60,151 +61,184 @@ void insertEdit(char** params, Page* popPage, List* popEditor)
 
 List* deleteEdit(char ** params, List* popEditor, Page* popPage)
 {
-    printf("Deliting edit %s %s %s...",params[0],params[1],params[2]);
 
     Page* page = findPageByName(popPage, params[0]);
     
     if(page == NULL) 
     {
-        printf("\nPage %s doesn't exist", params[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[RETIRACONTRIBUICAO]: Não foi encontrada a página ");
+        strcat(loggM, params[0]);
+        logg(loggM);
         return NULL;
     }
-
-    printf("\nPage found: %s %s\n", page->name[0],page->name[1]);
 
     List* editor = findListByName(popEditor, params[1]);
 
     if(editor == NULL) 
     {
-        printf("\nEditor not found\n");
+        char loggM[100];
+        strcpy(loggM, "\nERRO[RETIRACONTRIBUICAO]: Não foi encontrada editor ");
+        strcat(loggM, params[1]);
+        logg(loggM);
         return NULL;
     }
     List * edit = findListByName(page->edit, params[2]);
     if(edit == NULL) 
     {
-        printf("\n Edit not found\n");
+        char loggM[100];
+        strcpy(loggM, "\nERRO[RETIRACONTRIBUICAO]: Não foi encontrada a contribuição ");
+        strcat(loggM, params[1]);
+        logg(loggM);
         return NULL;
     }
     else if(strcmp(edit->reference->name[0], params[1]) != 0)
     {
-        printf("\n Only %s can delete %s ", edit->reference->name[0], params[1]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[RETIRACONTRIBUICAO]: A página  ");
+        strcat(loggM, params[0]);
+        strcat(loggM, " apenas pode ser deletada por ");
+        strcat(loggM, edit->reference->name[0]);
+        logg(loggM);
         return NULL;
     }
     List* deleted = findListByName(page->edit, params[2]);
     if(deleted == NULL) 
     {
-        printf("\n Edit %s not found on the page %s\n", params[2], page->name[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[RETIRACONTRIBUICAO]: A contribuição  ");
+        strcat(loggM, params[2]);
+        strcat(loggM, " não pertence á página ");
+        strcat(loggM, params[0]);
+        logg(loggM);
         return NULL;
     }
-    page->edit = deleteList(params[2], page->edit, 1);//Finding the edit file 
-    free(deleted);
-    free(deleted->name[0]);
-    free(deleted->name);
+    //it's just flag that the edit isn't supposed to be shown
+    page->edit->avaiable = 0;
 
     return page->edit;
-
 }
 
 void insertLink(char** params, Page* popPage)
 {
-    printf("\nInserting Link %s %s...\n",params[0],params[1]);
-
+    
     Page* page1 = findPageByName(popPage, params[0]);
-    printf("\nFound first page %s\n",page1->name[0]);
+
     if(page1 == NULL) 
     {
-        printf("\nPage %s doesn't exist\n", params[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[INSERIRLINK]: Não foi encontrada a página  ");
+        strcat(loggM, params[0]);
+        logg(loggM);
         return ;
-    }
-    else if(strcmp(page1->name[0], params[0]) != 0)
-    {
-        printf("\n %s != %s Can't create link\n", params[0], page1->name[0]);
     }
 
     Page* page2 = findPageByName(popPage, params[1]);
     
     if(page2 == NULL) 
     {
-        printf("\nPage %s doesn't exist\n", params[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[INSERIRLINK]: Não foi encontrada a página  ");
+        strcat(loggM, params[1]);
+        logg(loggM);
         return ;
     }
-    
-    printf("\nfound: %s %s", page1->name[0],page2->name[0]);
 
     Page* link = findLinkByName(page1->link,params[1]);
     if(link != NULL)
     {
-        printf("\n Link already exist from %s to %s",page1->name[0], link->name[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO[INSERIRLINK]: Já existe link entre  ");
+        strcat(loggM, params[0]);
+        strcat(loggM, " e ");
+        strcat(loggM, params[1]);
+        logg(loggM);
         return;
     }
-
+    //same as inserting some page, but it's just meant to point to an actual page that contains it's data.
     page1->link = insertPage(params, 0, page1->link);
     page1->link->link = page2;
     
     return ;
 }
 
-void printPage(Page* popEditor)
+void deleteLink(char ** params, Page* popPage)
 {
-    printf("\n<print>");  
+    //same as deleting normal nodes, but in this case the reference isn't in the actual structure, but in the page 
+    //but the page is preserved
+    Page* page = findPageByName(popPage, params[0]);
 
-    struct Page *page = popEditor;
-	
-    //start from the beginning
-    while(page != NULL) 
-    {   
-        printf("\n");
-        for(int j = 0; j<2; j++)
-        {
-            printf("[%d] : %s ",j, (page->name)[j]);
-        }
-        printList(page->edit,1);
-        printLink(page->link);
+    if(page->link == NULL)
+    {
+        char loggM[100];
+        strcpy(loggM, "\nERRO[RETIRARLINK]: Não existem links na página  ");
+        strcat(loggM, params[0]);
+        logg(loggM);
+        return;
+    }
 
-        page = page->next;
-        printf("\n");
-    }  
-}
+    struct Page* currentLink = page->link; //taking the last inserted
+    //todo: Free the linked Pages first
+    //searching for the page name
+    Page* previousLink;
 
-void printLink(Page* linkPage)
-{
-    printf("\n<links>");  
 
-    struct Page *link = linkPage;
-	
-    //start from the beginning
-    while(link != NULL) 
-    {   
-        printf("\n");
-        
-        printf("[0] : %s ", (link->link->name)[0]);
-        
-        link = link->next;
-    }    
+    while(strcmp(currentLink->link->name[0], params[1]) != 0) {
+
+        if(currentLink->next == NULL) {
+            char loggM[100];
+            strcpy(loggM, "\nERRO[RETIRARLINK]: Não foi econtrado o link entre ");
+            strcat(loggM, params[0]);
+            strcat(loggM, " e ");
+            strcat(loggM, params[1]);
+            logg(loggM);
+           
+            return ;//if null was found, that's the end of the page
+        } else {//if there're some items
+            previousLink = currentLink;
+            currentLink = currentLink->next;//and look for the name in the next one
+        }  
+    }
+
+   if(currentLink == page->link) {//in case it's the last inserted
+      page->link = page->link->next;//just point it to the next
+   } else {//otherwise
+      previousLink->next = currentLink->next;//make the previous point to the next one
+   }
+   
+   
+   free(currentLink);
+   return ;
 }
 
 void isLink(char** params,Page* popPage)
 {
-    printf("\nIs there link %s %s\n", params[0], params[1]);
+    //just finde and tell if there's a link between two pages
     Page* page1 = findPageByName(popPage, params[0]);
     if(page1 == NULL)
     {
-        printf("\nPage %s not found\n", params[0]);
+        char loggM[100];
+        strcpy(loggM, "\nERRO: Pagina ");
+        strcat(loggM, params[1]);
+        strcat(loggM, "não foi inserida.");
+        logg(loggM);
         return;
     }
     
     Page* page2 = findPageByName(popPage, params[1]);
     if(page2 == NULL)
-    {
-        printf("\nPage %s not found\n", params[1]);
+    {   
+        char loggM[100];
+        strcpy(loggM, "\nERRO: Pagina ");
+        strcat(loggM, params[1]);
+        strcat(loggM, "não foi inserida.");
+        logg(loggM);
         return;
     }
 
     Page* link = findLinkByName(page1->link, params[1]);
     if(link == NULL)
     {
-        printf("\nLink not found\n");
-        printf("\nThere's no link between them look: %s %s.\n", page1->name[0], page2->name[0]);
         char loggM[50];
         strcpy(loggM, "\nNAO HA CAMINHO DA PAGINA ");
         strcat(loggM, params[0]);
@@ -229,7 +263,7 @@ void isLink(char** params,Page* popPage)
 
 void logg(char* logM)
 {
-    
+    //update the log file each problem.
     FILE * log;
 
     log = fopen("log.txt", "a");
@@ -245,6 +279,7 @@ void logg(char* logM)
     fclose(log);
 
 }
+
 void fprintPage(char ** params, Page* popPage)
 {/*
     Fisica
@@ -262,13 +297,34 @@ void fprintPage(char ** params, Page* popPage)
     -------- c1.txt (Pedro) --------
 */
     FILE * file;
-
+    //calls the print to an individual page
     Page* page = findPageByName(popPage, params[0]);
-    file = fopen(page->name[1], "a");
+    printPg(page);
+
+}
+
+void printWik(Page* popPage)
+{
+    //calls printPg to all pages
+    Page* page = popPage;
+    while(page != NULL)
+    {
+        printPg(page);
+        page = page->next;
+    }
+}
+
+void printPg(Page* page)
+{
+    FILE* file;
+     file = fopen(page->name[1], "w");
     
     if(file == NULL)
     {
-        printf("Unable to create file.\n");
+        char loggM[100];
+        strcpy(loggM, "\nERRO: Não foi possível criar/abrir o arquivo ");
+        strcat(loggM, page->name[1]);
+        logg(loggM);
         exit(EXIT_FAILURE);
     }
 
@@ -279,7 +335,7 @@ void fprintPage(char ** params, Page* popPage)
     List* edit = page->edit;
     while(edit != NULL)
     {
-        fprintf(file,"%s %s\n",edit->reference->name[0], edit->name[0]);
+        fprintf(file,"%s %s %s\n",edit->reference->name[0], edit->name[0],  edit->avaiable == 1 ? " " : "<<retirada>>");
         edit = edit->next;
     }
 
@@ -289,7 +345,7 @@ void fprintPage(char ** params, Page* popPage)
     Page* link = page->link;
     while (link != NULL)
     {
-        fprintf(file,"%s %s\n",link->link->name[0], link->link->name[0]);
+        fprintf(file,"%s %s\n",link->link->name[0], link->link->name[1]);
         link = link->next;
     }
     
@@ -298,13 +354,20 @@ void fprintPage(char ** params, Page* popPage)
     edit = page->edit;
     while (edit != NULL)
     {
-        printf("editing %s %s", edit->name[0],edit->reference->name[0]);
+        if(edit->avaiable != 1) 
+        {   
+            edit = edit->next;
+            continue;
+        }
         fprintf(file,"\n-------- %s (%s) --------\n", edit->name[0],edit->reference->name[0]);
         FILE *piece;
     
         piece = fopen(edit->name[0], "r");
         if (piece == NULL){
-            printf("Could not open file %s",edit->name[0]);
+            char loggM[100];
+            strcpy(loggM, "\nERRO: Não foi possível criar/abrir o arquivo ");
+            strcat(loggM, edit->name[0]);
+            logg(loggM);
         }
         char letter;
         fputc('\n', file);
@@ -316,5 +379,44 @@ void fprintPage(char ** params, Page* popPage)
     
 
     fclose(file);
+}
 
+void freeAll(Page* popPage, List* popEditor)
+{
+    Page* page;
+    List* editor;
+    Page* link;
+    List* edit;
+
+    while(popPage != NULL || popEditor != NULL )
+    {
+        page = popPage;
+        editor = popEditor;
+        
+        
+        while(page->link != NULL || page->edit != NULL)
+        {
+            edit = page->edit;
+            link = page->link;
+            page->link  != NULL ? page->link  = page->link->next : NULL;
+            page->edit != NULL ? page->edit = page->edit->next : NULL;
+
+            free(link->name[0]);
+            free(link->name);
+            free(link);
+            free(edit->name[0]);
+            free(edit->name);
+            free(edit);
+        }
+        
+        popPage != NULL ? popPage = popPage->next : NULL;
+        popEditor != NULL ? popEditor = popEditor->next : NULL;
+
+        free(page->name[0]);
+        free(page->name[1]);
+        free(editor->name[0]);
+        free(editor->name);
+        free(editor);
+        free(page);
+    }
 }

@@ -4,10 +4,11 @@
 #include<string.h>
 #include<assert.h>
 #include "list.h"
+#include "private.h"
 
 List* insertList(char** params, int size, List* popList)
 {
-   printf("\ninserting %s\n", params[0]);
+
    //creating a new list  
    List* list = (List*)malloc(sizeof(List));
 
@@ -21,63 +22,47 @@ List* insertList(char** params, int size, List* popList)
 
          strcpy((list->name)[j],params[j]);
 
-         printf("[%d]: %s ",j, (list->name)[j] ); 
       }
    }
-
+   list->avaiable = 1;
    list->next = popList;
    list->reference = NULL;
 
    return list;
 }
 
-
-void printList(List* popList, int size) 
-{
-   printf("\n<p>");
-
-   struct List *list = popList;
-	
-   //start from the beginning
-    while(list != NULL) 
-    {   
-       printf("\n");
-        for(int j = 0; j<size; j++)
-        {
-            printf("[%d] : %s ",j, (list->name)[j]);
-        }
-        if(list->reference != NULL) if(list->reference->name != NULL) printf("\n ref: %s",list->reference->name[0] );
-        list = list->next;
-    }
-}
-
 List* deleteList(char name[], List* popList, int size)
 {
-   printf("deliting %s popList:  %s \n", name, popList->name[0]);
    struct List* currentList = popList; //taking the last inserted
    struct List* previous = NULL;
    
 
    if(popList == NULL) {
       //if none was inserted yet, there's nothing to be deleted
-      printf("Nothing to be delete");
+      char loggM[80];
+      strcpy(loggM, "\nNão é possível deletar ");
+      strcat(loggM, name);
+      strcat(loggM, " pois não há páginas ");
+      logg(loggM);
+
+      logg(loggM);
       return popList;
       //todo: create a log (logfile) for this
    }
-   printf("\ni %s\n", currentList->name[0]);
    //todo: Free the linked lists first
    //searching for the List name
    while(strcmp(currentList->name[0], name)!=0) {
 
-      printf("s %s\n",currentList->name[0]);
       if(currentList->next == NULL) {
-         printf("Name not found");
+         char loggM[80];
+         strcpy(loggM, "\nNão foi encontrado ");
+         strcat(loggM, name);
+         strcat(loggM, " nas páginas");
+         logg(loggM);
          //todo: create a log (logfile) for this
 
          return popList;//if null was found, that's the end of the List
       } else {//if there're some items
-         printf("\ni %s\n", currentList->name[0]);
-
          previous = currentList;//keep the previous 
          currentList = currentList->next;//and look for the name in the next one
       }  
@@ -100,7 +85,6 @@ List* findListByName(List* popList, char name[])
 {
    
    if(popList == NULL) {
-      printf("\nis null\n");
       return NULL;//if none was inserted yet, there's nothing to be deleted
       //todo: create a log (logfile) for this
    }
@@ -111,16 +95,15 @@ List* findListByName(List* popList, char name[])
    while(strcmp(currentList->name[0], name)!=0) {
 
       if(currentList->next == NULL) {
-         printf("\nName not found \n");
+
          //todo: create a log (logfile) for this
          return NULL;//if null was found, that's the end of the List
       } else {//if there're some items
-         printf("\nelse %s\n", currentList->name[0]);
 
          currentList = currentList->next;//and look for the name in the next one
       }  
    }
-   printf("\nfound list %s\n",currentList->name[0]);
+
    return currentList;
 
 }

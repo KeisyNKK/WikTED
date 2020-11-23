@@ -13,4 +13,9 @@ void insertLink(char** params, Page* popPage);
 void isLink(char** params,Page* popPage);
 void logg(char* logM);
 void fprintPage(char ** params, Page* popPage);
+void printWik(Page* popPage);
+void printPg(Page* page);
+void freeAll(Page* popPage, List* popEditor);
+
+
 #endif // PRIVATE_H_INCLUDED

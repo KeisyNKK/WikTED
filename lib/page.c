@@ -8,7 +8,7 @@
 
 Page* insertPage(char** params, int size, Page* popPage)
 {
-   //creating a new page  
+   //creating a new page  - same as inserting nomral linked lists
    Page* page = (Page*)malloc(sizeof(Page));
 
    if(size>0) 
@@ -20,8 +20,6 @@ Page* insertPage(char** params, int size, Page* popPage)
          page->name[j] = (char *)malloc(sizeof(char)*( (strlen(params[j])+10) ));
 
          strcpy((page->name)[j],params[j]);
-
-         printf("[%d]: %s ",j, (page->name)[j] );
       }
    }
 
@@ -35,7 +33,6 @@ Page* insertPage(char** params, int size, Page* popPage)
 
 Page* deletePage(char name[], Page* popPage)
 {
-   printf("deliting %s... \n", name);
    struct Page* currentPage = popPage; //taking the last inserted
    struct Page* previous = NULL;
    
@@ -81,17 +78,13 @@ Page* findPageByName(Page* popPage, char name[])
 {
    
    if(popPage == NULL) {
-      printf("\nPage NULL\n");
-
       return NULL;
    }
    
    struct Page* currentPage = popPage; //taking the last inserted
    //searching for the page name
-   while(strcmp(currentPage->name[0], name)!=0) {
-      
+   while(strcmp(currentPage->name[0], name)!=0) {      
       if(currentPage->next == NULL) {
-         printf("\nPage not found\n");
          return NULL;//if null was found, that's the end of the page
       } else {//if there's something
          currentPage = currentPage->next;//and look for the name in the next one
@@ -104,7 +97,6 @@ Page* findPageByName(Page* popPage, char name[])
 Page* findLinkByName(Page* pageLink, char name[])
 {    
    if(pageLink == NULL) {
-      printf("\nis null\n");
       return NULL;//if none was inserted yet, there's nothing to be deleted
       //todo: create a log (logfile) for this
    }
@@ -114,11 +106,9 @@ Page* findLinkByName(Page* pageLink, char name[])
    while(strcmp(currentLink->link->name[0], name) != 0) {
 
       if(currentLink->next == NULL) {
-         printf("\nLink not found \n");
          //todo: create a log (logfile) for this
          return NULL;//if null was found, that's the end of the page
       } else {//if there're some items
-         printf("\nelse %s\n", currentLink->link->name[0]);
 
          currentLink = currentLink->next;//and look for the name in the next one
       }  
@@ -128,6 +118,7 @@ Page* findLinkByName(Page* pageLink, char name[])
 
 void reversePage(Page** PageR) 
 {
+   //Just reversing the list 
    Page* prev   = NULL;
    Page* current = *PageR;
    Page* next;
