@@ -48,3 +48,4 @@ WikTED.out entrada.txt
 
 
 
+"sua mae" 
