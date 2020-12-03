@@ -6,13 +6,15 @@ WikTED
 Objective
 ---------
 
-Use data structures as Linked Lists to build a one time open-collaborative online encyclopedia
+Use data structures as Linked Lists to build a one time open-collaborative online encyclopedia.
+
+The code reads a input file, build the infraestructure and print/ create the necessary files
 
 Functionality
 -------------
 
 
-Based on the input file the program knows the instructions and their params and also can create and delete pages on the WikED.
+It does what the specfications require such as adding editors, pages, links and colaborative text.
 
 
 How to run
@@ -27,7 +29,7 @@ git clone https://github.com/KeisyNKK/WikTED.git
 Compile it (download MinGW if on Windows) with
 
 ```bash
-gcc ./*.c  ./lib/*.c -o WikTED
+gcc ./*c ./lib/*.c ./client/*.c -o WikTED
 ```
 
 Run on LINUX

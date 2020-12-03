@@ -2,26 +2,28 @@
 #ifndef PAGE_H_INCLUDED
 #define PAGE_H_INCLUDED
 #pragma once
-#include<stdio.h>
-#include "editor.h"
-#include "link.h"
+#include "list.h"
 
 typedef struct Page Page;
 
 struct Page
 {
    Page* next; //outra pagina
-   char* name; //nome do artigo
-   char* file; //nome do artigo
-   Link link;
-   Editor* editor;
-   Edit* edit;
+   char** name; //nome do artigo
+   List* edit; //contribuição
+   Page* link; //elemento de lista genérico
 };
 
-void insertPage(char name[], char file[]);
-struct Page* findPage(char* name); 
-void printList();
-void deletePage(char name[]);
+Page* insertPage(char** params, int size, Page* popPage);
+Page* deletePage(char name[], Page* popPage);
+Page* findPageByName(Page* popPage, char name[]);
+Page* findLinkByName(Page* pageLink, char name[]);
+void printLink(Page* linkPage);
+void reversePage(Page** PageR);
+void deleteLink(char ** params, Page* popPage);
+
 
 
 #endif // PAGE_H_INCLUDED
+
+
